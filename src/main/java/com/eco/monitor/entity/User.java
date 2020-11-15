@@ -12,6 +12,13 @@ public class User {
     private String email;
     private String password;
 
+    public User() {
+    }
+
+    public User(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -1,6 +1,7 @@
 package com.eco.monitor.service;
 
 import com.eco.monitor.config.ConfigurationManager;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,12 @@ public class TokenService {
                 .setExpiration(new Date(nowMillis + 7200000))
                 .signWith(signatureAlgorithm, signingKey)
                 .compact();
+    }
+
+    public Integer decodeJWT(String jwt) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(DatatypeConverter.parseBase64Binary(configurationManager.getJwtSecret()))
+                .parseClaimsJws(jwt).getBody();
+        return Integer.valueOf(claims.getIssuer());
     }
 }

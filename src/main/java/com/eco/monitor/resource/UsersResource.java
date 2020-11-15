@@ -22,11 +22,21 @@ public class UsersResource {
     @Autowired
     public TokenService tokenService;
 
-    @PostMapping(path = "/sing-up")
+    @PostMapping(path = "/sign-up")
     public ResponseEntity<SignUpUserResponse> signUpUser(@RequestBody SignUpUserRequest request) throws Exception {
         UserDto user = userService.addUser(request.getEmail(), request.getPassword());
 
         String token = tokenService.createJWT(user.getId().toString());
-        return ResponseEntity.ok(new SignUpUserResponse(token));
+        System.out.println("NEW USER WITH ID = " + user.getId() + " WAS REGISTERED");
+        return ResponseEntity.ok(new SignUpUserResponse(token, user.getId()));
+    }
+
+    @PostMapping(path = "/sign-in")
+    public ResponseEntity<SignUpUserResponse> signInUser(@RequestBody SignUpUserRequest request) throws Exception {
+        UserDto user = userService.getUser(request.getEmail(), request.getPassword());
+
+        String token = tokenService.createJWT(user.getId().toString());
+        System.out.println("NEW USER WITH ID = " + user.getId() + " WAS LOGGED IN");
+        return ResponseEntity.ok(new SignUpUserResponse(token, user.getId()));
     }
 }

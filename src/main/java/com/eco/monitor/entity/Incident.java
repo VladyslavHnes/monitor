@@ -8,7 +8,7 @@ public class Incident {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String title;
     private String description;
     private String category;
@@ -16,14 +16,16 @@ public class Incident {
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Place place;
-//    private IncidentFile file;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId", referencedColumnName = "id", updatable = false, nullable = false)
+    private User user;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -65,5 +67,13 @@ public class Incident {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -2,18 +2,19 @@ package com.eco.monitor.dto;
 
 public class IncidentDto {
 
-    private Long id;
+    private Integer id;
     private String title;
     private String description;
     private String category;
     private String imageUrl;
     private PlaceDto place;
+    private Integer userId;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -55,5 +56,13 @@ public class IncidentDto {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

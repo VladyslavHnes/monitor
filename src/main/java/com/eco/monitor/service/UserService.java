@@ -13,7 +13,7 @@ public class UserService {
     private UserRepository repository;
 
     public UserDto addUser(String email, String password) throws Exception {
-        if(repository.findByEmail(email).isPresent()) {
+        if (repository.findByEmail(email).isPresent()) {
             throw new Exception();
         }
 
@@ -25,4 +25,8 @@ public class UserService {
         return new UserDto(savedUser.getId(), savedUser.getEmail(), savedUser.getPassword());
     }
 
+    public UserDto getUser(String email, String password) throws Exception {
+        User savedUser = repository.findByEmailAndPassword(email, password).orElseThrow(Exception::new);
+        return new UserDto(savedUser.getId(), savedUser.getEmail(), savedUser.getPassword());
+    }
 }

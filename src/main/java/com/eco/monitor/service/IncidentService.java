@@ -3,6 +3,7 @@ package com.eco.monitor.service;
 import com.eco.monitor.dto.IncidentDto;
 import com.eco.monitor.entity.Incident;
 import com.eco.monitor.entity.Place;
+import com.eco.monitor.entity.User;
 import com.eco.monitor.repository.IncidentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,15 +31,20 @@ public class IncidentService {
         incident.setDescription(incidentDto.getDescription());
         incident.setTitle(incidentDto.getTitle());
         incident.setImage(incidentDto.getImageUrl());
+        incident.setUser(new User(incidentDto.getUserId()));
 
         incidentRepository.save(incident);
     }
 
-    public IncidentDto getIncident(Long incidentId) throws Exception {
+    public IncidentDto getIncident(Integer incidentId) throws Exception {
         return toIncidentDto(incidentRepository.findById(incidentId).orElseThrow(Exception::new));
     }
 
     public List<IncidentDto> getIncidents() {
         return toIncidentDtoList((List<Incident>) incidentRepository.findAll());
+    }
+
+    public List<IncidentDto> getMyIncidents(Integer userId) {
+        return toIncidentDtoList(incidentRepository.findByUserId(userId));
     }
 }
