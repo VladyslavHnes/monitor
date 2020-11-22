@@ -1,6 +1,7 @@
 package com.eco.monitor.entity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "incidents")
@@ -13,6 +14,8 @@ public class Incident {
     private String description;
     private String category;
     private String image;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Place place;
@@ -75,5 +78,13 @@ public class Incident {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
